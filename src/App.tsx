@@ -88,11 +88,21 @@ function App() {
               />
             ))}
           </div>
-          {noOfCompletedTodos && (
+          {noOfCompletedTodos ? (
             <p className="p-5 text-base font-semibold text-center text-white">
               {noOfCompletedTodos} of {todos.length} items completed
             </p>
+          ) : (
+            ""
           )}
+          <div className="bg-slate-900 text-white  w-[800px] p-5">
+            <h2 className="text-lg font-bold">Tips</h2>
+            <ol className="">
+              <li>Use the input field to add a new todo</li>
+              <li>Click on the checkbox to mark a todo as completed</li>
+              <li>Click on the delete icon to delete a todo</li>
+            </ol>
+          </div>
         </div>
       </div>
     </div>
