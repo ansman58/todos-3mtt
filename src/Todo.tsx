@@ -7,6 +7,7 @@ interface TodoProps {
   todoIndex: number;
   todos: ITodo[];
   setTodos?: React.Dispatch<React.SetStateAction<ITodo[]>>;
+  setChecked?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Todo = (props: TodoProps) => {
@@ -19,6 +20,7 @@ const Todo = (props: TodoProps) => {
     newTodos[props.todoIndex].isCompleted = e.target.checked;
     localStorage.setItem("todos", JSON.stringify(newTodos));
     setCompleted(e.target.checked);
+    props.setChecked?.((prev) => !prev);
   };
 
   return (

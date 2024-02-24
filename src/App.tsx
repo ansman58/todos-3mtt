@@ -13,10 +13,11 @@ function App() {
   );
   const [todo, setTodo] = React.useState<ITodo["todo"]>("");
   const [noOfCompletedTodos, setNoOfCompletedTodos] = React.useState(0);
+  const [checked, setChecked] = React.useState(false);
 
   React.useEffect(() => {
     setNoOfCompletedTodos(todos.filter((todo) => todo.isCompleted).length);
-  }, [todos]);
+  }, [todos, checked]);
 
   const onAddTodo = () => {
     const newTodos = [...todos, { todo, isCompleted: false }];
@@ -63,12 +64,12 @@ function App() {
                 todoIndex={index}
                 todos={todos}
                 setTodos={setTodos}
+                setChecked={setChecked}
               />
             ))}
           </div>
           <p className="p-5 text-base font-semibold text-center text-white">
-            {noOfCompletedTodos} of {todos.length}{" "}
-            items completed
+            {noOfCompletedTodos} of {todos.length} items completed
           </p>
         </div>
       </div>
