@@ -8,20 +8,13 @@ interface TodoProps {
   todos: ITodo[];
   setChecked?: React.Dispatch<React.SetStateAction<boolean>>;
   onDeleteTodo?: () => void;
+  onCompleteTodo?: () => void;
 }
 
 const Todo = (props: TodoProps) => {
   const [completed, setCompleted] = React.useState(
     props.todos[props.todoIndex].isCompleted
   );
-
-  const onCompleteTodo = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newTodos = [...props.todos];
-    newTodos[props.todoIndex].isCompleted = e.target.checked;
-    localStorage.setItem("todos", JSON.stringify(newTodos));
-    setCompleted(e.target.checked);
-    props.setChecked?.((prev) => !prev);
-  };
 
   return (
     <div className="flex items-center justify-between gap-2 mb-5">
@@ -30,14 +23,17 @@ const Todo = (props: TodoProps) => {
           <input
             type="checkbox"
             name="check"
-            onChange={onCompleteTodo}
+            onChange={(e) => {
+              setCompleted(e.target.checked);
+              props.onCompleteTodo?.();
+            }}
             checked={completed}
             id="check"
             className="w-5 h-5 outline-none cursor-pointer basis-[5%]"
           />
           <p
             className={`${
-              completed ? "line-through" : ""
+              completed ? "line-through text" : ""
             }, text-white whitespace-pre-line basis-[95%]`}
           >
             {props.todo}

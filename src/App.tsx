@@ -19,7 +19,7 @@ function App() {
     setNoOfCompletedTodos(todos.filter((todo) => todo.isCompleted).length);
   }, [todos, checked]);
 
-  const saveTodos = () => {
+  const saveTodo = () => {
     const newTodos = [...todos, { todo, isCompleted: false }];
 
     setTodos(newTodos);
@@ -29,13 +29,21 @@ function App() {
 
   const onAddTodo = () => {
     if (!todo) return;
-    saveTodos();
+    saveTodo();
   };
 
   const onClickEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      saveTodos();
+      saveTodo();
     }
+  };
+
+  const onCompleteTodo = (todo: ITodo) => {
+    const newTodos = [...todos];
+    const index = newTodos.indexOf(todo);
+    newTodos[index].isCompleted = !newTodos[index].isCompleted;
+    setTodos(newTodos);
+    localStorage.setItem("todos", JSON.stringify(newTodos));
   };
 
   const onDeleteTodo = (todo: ITodo) => {
@@ -57,7 +65,7 @@ function App() {
               onChange={(e) => setTodo(e.target.value)}
               onKeyDown={onClickEnter}
               placeholder="Add a new todo"
-              className="basis-[80%] outline-none h-[40px] p-2"
+              className="basis-[80%] outline-none h-[40px] p-2 rounded-none"
             />
             <button
               type="button"
@@ -76,6 +84,7 @@ function App() {
                 todos={todos}
                 setChecked={setChecked}
                 onDeleteTodo={() => onDeleteTodo(todo)}
+                onCompleteTodo={() => onCompleteTodo(todo)}
               />
             ))}
           </div>
