@@ -95,7 +95,7 @@ function App() {
           ) : (
             ""
           )}
-          <div className="bg-slate-900 text-white  w-[800px] p-5">
+          <div className="p-5 text-white bg-slate-900">
             <h2 className="text-lg font-bold">Tips</h2>
             <ol className="list-decimal">
               <li>Use the input field to add a new todo</li>
