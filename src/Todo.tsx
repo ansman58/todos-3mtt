@@ -24,21 +24,21 @@ const Todo = (props: TodoProps) => {
   };
 
   return (
-    <div className="flex items-center justify-between mb-5">
-      <div className="p-2 border border-white rounded-md basis-[95%]">
-        <div className="flex items-center gap-2">
+    <div className="flex items-center justify-between gap-2 mb-5">
+      <div className="py-2 px-1 border border-white rounded-md basis-[95%]">
+        <div className="flex items-center justify-between gap-2">
           <input
             type="checkbox"
             name="check"
             onChange={onCompleteTodo}
             checked={completed}
             id="check"
-            className="w-5 h-5 outline-none cursor-pointer"
+            className="w-5 h-5 outline-none cursor-pointer basis-[5%]"
           />
           <p
             className={`${
-              completed ? "line-through text-white" : "text-white"
-            } `}
+              completed ? "line-through" : ""
+            }, text-white whitespace-pre-line basis-[95%]`}
           >
             {props.todo}
           </p>

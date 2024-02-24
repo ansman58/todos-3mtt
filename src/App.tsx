@@ -19,19 +19,22 @@ function App() {
     setNoOfCompletedTodos(todos.filter((todo) => todo.isCompleted).length);
   }, [todos, checked]);
 
-  const onAddTodo = () => {
-    if (!todo) return;
+  const saveTodos = () => {
     const newTodos = [...todos, { todo, isCompleted: false }];
 
     setTodos(newTodos);
+    setTodo("");
     localStorage.setItem("todos", JSON.stringify(newTodos));
+  };
+
+  const onAddTodo = () => {
+    if (!todo) return;
+    saveTodos();
   };
 
   const onClickEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      const newTodos = [...todos, { todo, isCompleted: false }];
-      setTodos(newTodos);
-      localStorage.setItem("todos", JSON.stringify(newTodos));
+      saveTodos();
     }
   };
 
@@ -39,7 +42,7 @@ function App() {
     const updateTodos = todos.filter((t) => t !== todo);
     setTodos(updateTodos);
     localStorage.setItem("todos", JSON.stringify(updateTodos));
-  }
+  };
 
   return (
     <div>
@@ -50,6 +53,7 @@ function App() {
               type="text"
               name="todo"
               id="todo"
+              value={todo}
               onChange={(e) => setTodo(e.target.value)}
               onKeyDown={onClickEnter}
               placeholder="Add a new todo"
@@ -63,7 +67,7 @@ function App() {
               Add
             </button>
           </div>
-          <div className="p-5 ">
+          <div className="p-5 max-h-[400px] overflow-y-auto">
             {todos.map((todo, index) => (
               <Todo
                 key={index}
@@ -75,9 +79,11 @@ function App() {
               />
             ))}
           </div>
-          <p className="p-5 text-base font-semibold text-center text-white">
-            {noOfCompletedTodos} of {todos.length} items completed
-          </p>
+          {noOfCompletedTodos && (
+            <p className="p-5 text-base font-semibold text-center text-white">
+              {noOfCompletedTodos} of {todos.length} items completed
+            </p>
+          )}
         </div>
       </div>
     </div>
