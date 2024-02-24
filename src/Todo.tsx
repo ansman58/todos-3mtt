@@ -6,8 +6,8 @@ interface TodoProps {
   todo: string;
   todoIndex: number;
   todos: ITodo[];
-  setTodos?: React.Dispatch<React.SetStateAction<ITodo[]>>;
   setChecked?: React.Dispatch<React.SetStateAction<boolean>>;
+  onDeleteTodo?: () => void;
 }
 
 const Todo = (props: TodoProps) => {
@@ -44,7 +44,10 @@ const Todo = (props: TodoProps) => {
           </p>
         </div>
       </div>
-      <DeleteIcon className="text-red-500 cursor-pointer" />
+      <DeleteIcon
+        className="text-red-500 cursor-pointer"
+        onClick={props.onDeleteTodo}
+      />
     </div>
   );
 };

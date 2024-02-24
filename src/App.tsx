@@ -20,6 +20,7 @@ function App() {
   }, [todos, checked]);
 
   const onAddTodo = () => {
+    if (!todo) return;
     const newTodos = [...todos, { todo, isCompleted: false }];
 
     setTodos(newTodos);
@@ -33,6 +34,12 @@ function App() {
       localStorage.setItem("todos", JSON.stringify(newTodos));
     }
   };
+
+  const onDeleteTodo = (todo: ITodo) => {
+    const updateTodos = todos.filter((t) => t !== todo);
+    setTodos(updateTodos);
+    localStorage.setItem("todos", JSON.stringify(updateTodos));
+  }
 
   return (
     <div>
@@ -63,8 +70,8 @@ function App() {
                 todo={todo.todo}
                 todoIndex={index}
                 todos={todos}
-                setTodos={setTodos}
                 setChecked={setChecked}
+                onDeleteTodo={() => onDeleteTodo(todo)}
               />
             ))}
           </div>
