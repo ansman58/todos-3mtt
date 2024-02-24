@@ -1,20 +1,24 @@
 import React from "react";
 import DeleteIcon from "./icons/DeleteIcon";
+import { ITodo } from "./App";
 
 interface TodoProps {
   todo: string;
   todoIndex: number;
-  todos: { todo: string; isCompleted: boolean }[];
+  todos: ITodo[];
+  setTodos?: React.Dispatch<React.SetStateAction<ITodo[]>>;
 }
 
 const Todo = (props: TodoProps) => {
-  const [completed, setCompleted] = React.useState(props.todos[props.todoIndex].isCompleted);
+  const [completed, setCompleted] = React.useState(
+    props.todos[props.todoIndex].isCompleted
+  );
 
   const onCompleteTodo = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newTodos = [...props.todos];
     newTodos[props.todoIndex].isCompleted = e.target.checked;
     localStorage.setItem("todos", JSON.stringify(newTodos));
-    setCompleted(e.target.checked); 
+    setCompleted(e.target.checked);
   };
 
   return (

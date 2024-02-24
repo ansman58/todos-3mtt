@@ -2,16 +2,21 @@ import React from "react";
 import "./App.css";
 import Todo from "./Todo";
 
-type Todo = {
+export type ITodo = {
   todo: string;
   isCompleted: boolean;
 };
 
 function App() {
-  const [todos, setTodos] = React.useState<Todo[]>(
+  const [todos, setTodos] = React.useState<ITodo[]>(
     JSON.parse(localStorage.getItem("todos") || "[]")
   );
-  const [todo, setTodo] = React.useState<Todo["todo"]>("");
+  const [todo, setTodo] = React.useState<ITodo["todo"]>("");
+  const [noOfCompletedTodos, setNoOfCompletedTodos] = React.useState(0);
+
+  React.useEffect(() => {
+    setNoOfCompletedTodos(todos.filter((todo) => todo.isCompleted).length);
+  }, [todos]);
 
   const onAddTodo = () => {
     const newTodos = [...todos, { todo, isCompleted: false }];
@@ -21,20 +26,11 @@ function App() {
   };
 
   const onClickEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    const newTodos = [...todos, { todo, isCompleted: false }];
     if (e.key === "Enter") {
+      const newTodos = [...todos, { todo, isCompleted: false }];
       setTodos(newTodos);
       localStorage.setItem("todos", JSON.stringify(newTodos));
     }
-  };
-
-  const onCompleteTodo = (
-    index: number,
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const newTodos = [...todos];
-    newTodos[index].isCompleted = e.target.checked;
-    localStorage.setItem("todos", JSON.stringify(newTodos));
   };
 
   return (
@@ -66,11 +62,13 @@ function App() {
                 todo={todo.todo}
                 todoIndex={index}
                 todos={todos}
+                setTodos={setTodos}
               />
             ))}
           </div>
           <p className="p-5 text-base font-semibold text-center text-white">
-            Hello World
+            {noOfCompletedTodos} of {todos.length}{" "}
+            items completed
           </p>
         </div>
       </div>
