@@ -34,7 +34,7 @@ const Todo = (props: TodoProps) => {
           <p
             className={`${
               completed ? "line-through text" : ""
-            }, text-white whitespace-pre-line basis-[95%]`}
+            }, text-white whitespace-pre-line basis-[95%] max-h-[100px] overflow-y-auto`}
           >
             {props.todo}
           </p>
